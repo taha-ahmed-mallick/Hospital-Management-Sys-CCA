@@ -2,5 +2,5 @@
 !*/
 !*.*
 *.exe
-./code/doctors
-./code/patients
+./code/doctors/*
+./code/patients/*
