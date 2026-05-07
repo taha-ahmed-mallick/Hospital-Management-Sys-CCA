@@ -114,7 +114,7 @@ public:
     static string getKeys()
     {
         char ch = getch();
-        if (ch == 0 || ch == 224 || ch == '\e')
+        if (ch == 0 || ch == -32 || ch == '\e')
         {
 #ifdef __linux__
             getch();
