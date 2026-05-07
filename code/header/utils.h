@@ -91,7 +91,7 @@ public:
     }
 
 #ifdef _WIN32
-    satic void initConsole()
+    static void initConsole()
     {
         SetConsoleOutputCP(CP_UTF8);
 
