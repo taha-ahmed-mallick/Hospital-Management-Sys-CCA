@@ -21,8 +21,23 @@ int main()
             return 1;
         }
     }
-    cout << "\033[1;34m\t┌──────────────────────────┐\n"
-                    <<"\t│Hospital Management System│\n"
-                    <<"\t└──────────────────────────┘\033[0m\n";
+
+    string heading =  "\033[1;34m\t┌──────────────────────────┐\n\t│Hospital Management System│\n\t└──────────────────────────┘\033[0m\n\n\n";
+    vector<string> opt = {"Login as a Doctor",
+                          "Signup as a Doc",
+                          "Login as a Patient",
+                          "Signup as a Patient",
+                          "EXIT"};
+    vector<int> flags = {0, 0, 0, 0, 1};
+    int select = Utils::menu(opt, flags, heading);
+    cout << select;
+
+
+    // testing
+    while (true)
+    {
+        string key = Utils::getKeys();
+        cout << key;
+    }
     return 0;
 }
