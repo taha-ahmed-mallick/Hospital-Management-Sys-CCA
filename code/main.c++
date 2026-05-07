@@ -10,7 +10,7 @@ int main()
 #ifdef _WIN32
     Utils::initConsole();
 #endif
-    string folders[] = {"doctors/", "patients/"};
+    string folders[] = {"records/","records/doctors/", "records/patients/"};
     int folderLen = sizeof(folders) / sizeof(folders[0]);
     for (int i = 0; i < folderLen; i++)
     {
