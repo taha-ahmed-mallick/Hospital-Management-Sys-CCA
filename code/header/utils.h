@@ -189,9 +189,10 @@ public:
 
     static string getPassword()
     {
-        // string password = "";
-        // password.length();
-        // '\e';
-        return "a";
+        setEcho(false);
+        string password;
+        getline(cin, password);
+        setEcho(true);
+        return password;
     }
 };
