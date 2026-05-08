@@ -23,7 +23,7 @@ using namespace std;
 
 class Utils
 {
-private:
+protected:
     static char getch()
     {
 #ifdef _WIN32
