@@ -111,6 +111,11 @@ public:
 #endif
     }
 
+    static void clearLine()
+    {
+        cout << "\e[2K\e[G";
+    }
+
     static string getKeys()
     {
         char ch = getch();
@@ -145,46 +150,6 @@ public:
             return "BCK";
 
         return std::string(1, ch);
-    }
-
-    static int menu(vector<string> opt, vector<int> flags, string before = "")
-    {
-        int selected = 0, size = opt.size();
-        string key = "";
-        do
-        {
-            clear();
-            cout << before;
-            cout << "Use arrow keys to navigate:\n\n";
-            for (int i = 0; i < size; i++)
-            {
-                cout << "\033[1m";
-                if (flags[i] == 1)
-                    cout << "\033[31m";
-                if (i == selected)
-                {
-                    if (flags[i] == 0)
-                        cout << "\033[32m";
-                    cout << "\033[4m> ";
-                }
-                cout << opt[i] << endl;
-                cout << "\033[0m";
-            }
-            cout << "\nPress ENTER to select.";
-            string key = getKeys();
-            if (key == "UP")
-                selected--;
-            else if (key == "DN")
-                selected++;
-            else if (key == "ENT")
-                break;
-            if (selected < 0)
-                selected = 0;
-            if (selected >= size)
-                selected = size - 1;
-        } while (true);
-
-        return selected;
     }
 
     static string getPassword()
