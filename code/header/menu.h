@@ -2,16 +2,16 @@
 
 #include "./utils.h"
 
-class Menu
+class Menu : protected Utils
 {
 public:
-    static int full(vector<string> opt, vector<int> flags, string before = "")
+    static int full(const vector<string>& opt, const vector<int>& flags, string before = "")
     {
         int selected = 0, size = opt.size();
         string key;
         do
         {
-            Utils::clear();
+            clear();
             cout << before;
             cout << "Use arrow keys to navigate:\n\n";
             for (int i = 0; i < size; i++)
@@ -29,7 +29,7 @@ public:
                 cout << "\033[0m";
             }
             cout << "\nPress ENTER to select.";
-            string key = Utils::getKeys();
+            string key = getKeys();
             if (key == "UP")
                 selected--;
             else if (key == "DN")
@@ -43,24 +43,25 @@ public:
         } while (true);
     }
 
-    static int mini(vector<string> opt, string text = "")
+    template <typename T>
+    static T mini(const vector<T>& opt, string text = "")
     {
         int selected = 0, size = opt.size();
         string key;
         do
         {
-            Utils::clearLine();
+            clearLine();
             cout << text << "\e[1;36m" << opt[selected] << " \e[33m(Use Arrow keys)\e[0m";
             cout.flush();
-            key = Utils::getKeys();
+            key = getKeys();
             if (key == "UP" || key == "LT")
-            selected--;
-            else if(key == "DN" || key == "RT")
-            selected++;
-            else if(key == "ENT")
-            return selected;
+                selected--;
+            else if (key == "DN" || key == "RT")
+                selected++;
+            else if (key == "ENT")
+                return opt[selected];
             if (selected < 0)
-                selected = size -1;
+                selected = size - 1;
             else if (selected >= size)
                 selected = 0;
         } while (true);
