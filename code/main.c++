@@ -34,8 +34,6 @@ int main()
 
     vector<string> bloodGrp = {"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"};
 
-    Menu::mini(bloodGrp, "Blood Group: ");
-
     switch (select)
     {
     case 0:
@@ -97,11 +95,5 @@ int main()
         break;
     }
 
-    // testing
-    while (true)
-    {
-        string key = Utils::getKeys();
-        cout << key;
-    }
     return 0;
 }
