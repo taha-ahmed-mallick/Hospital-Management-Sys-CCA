@@ -5,7 +5,7 @@
 class Menu : protected Utils
 {
 public:
-    static int full(const vector<string>& opt, const vector<int>& flags, string before = "")
+    static int full(const vector<string> &opt, const vector<int> &flags, string before = "")
     {
         int selected = 0, size = opt.size();
         string key;
@@ -44,7 +44,7 @@ public:
     }
 
     template <typename T>
-    static T mini(const vector<T>& opt, string text = "")
+    static T mini(const vector<T> &opt, string text = "")
     {
         int selected = 0, size = opt.size();
         string key;
@@ -59,7 +59,11 @@ public:
             else if (key == "DN" || key == "RT")
                 selected++;
             else if (key == "ENT")
+            {
+                clearLine();
+                cout << text << opt[selected] << endl;
                 return opt[selected];
+            }
             if (selected < 0)
                 selected = size - 1;
             else if (selected >= size)
