@@ -153,7 +153,6 @@ public:
     {
         setEcho(false);
         string password;
-        cin.ignore();
         getline(cin, password);
         setEcho(true);
         return password;
