@@ -105,11 +105,7 @@ public:
 
     static void clear()
     {
-#ifdef _WIN32
-        system("cls");
-#else
-        system("clear");
-#endif
+        cout << "\e[H\e[2J\e[3J";
     }
 
     static void clearLine()
