@@ -44,14 +44,14 @@ public:
     }
 
     template <typename T>
-    static T mini(const vector<T> &opt, string text = "")
+    static T mini(const vector<T> &opt, string text = "", string after = "")
     {
         int selected = 0, size = opt.size();
         string key;
         do
         {
             clearLine();
-            cout << text << "\e[1;36m" << opt[selected] << " \e[33m(Use Arrow keys)\e[0m";
+            cout << text << "\e[1;36m" << opt[selected] << after << " \e[33m(Use Arrow keys)\e[0m";
             cout.flush();
             key = getKeys();
             if (key == "UP" || key == "LT")
@@ -69,5 +69,12 @@ public:
             else if (selected >= size)
                 selected = 0;
         } while (true);
+    }
+
+    static int number(int start, int end, string text = "", string after = "") {
+        vector<int> vec;
+        for (int i = start; i <= end; i++)
+            vec.push_back(i);
+        return mini(vec, text, after);
     }
 };
