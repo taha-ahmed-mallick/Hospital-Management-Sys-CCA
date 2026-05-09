@@ -101,6 +101,22 @@ public:
         mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
         SetConsoleMode(hOut, mode);
     }
+
+    static COORD getCursorPosition()
+    {
+        HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+        CONSOLE_SCREEN_BUFFER_INFO csbi;
+        GetConsoleScreenBufferInfo(hOut, &csbi);
+
+        return csbi.dwCursorPosition;
+    }
+
+    static void setCursorPosition(COORD pos)
+    {
+        HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleCursorPosition(hOut, pos);
+    }
 #endif
 
     static void clear()
@@ -151,10 +167,16 @@ public:
 
     static string getPassword()
     {
+#ifdef _WIN32
+        COORD pos = getCursorPosition();
+#endif
         setEcho(false);
         string password;
         getline(cin, password);
         setEcho(true);
+#ifdef _WIN32
+        setCursorPosition(pos);
+#endif
         return password;
     }
 };
