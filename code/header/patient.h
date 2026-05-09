@@ -6,7 +6,7 @@ class Patient : public Person
 {
 protected:
     string gender, bloodGrp;
-    int height, weight;
+    float height, weight;
     long MR_num;
 public:
 };
