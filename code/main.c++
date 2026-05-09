@@ -4,6 +4,9 @@
 #include <sstream>
 #include "./header/utils.h"
 #include "./header/menu.h"
+#include "./header/doctor.h"
+#include "./header/patient.h"
+#include "./header/auth.h"
 using namespace std;
 
 int main()
@@ -38,63 +41,29 @@ int main()
     switch (select)
     {
     case 0:
-    {
-        Utils::clear();
-        cout << heading
-             << "\e[1;33mLoging in as a Doctor\n\n\e[0m";
-        string email, password;
-        cout << "Enter your email: ";
-        cin >> email;
-        cout << "Enter your password: ";
-        password = Utils::getPassword();
+        Auth::auth("doc", "login", heading);
         break;
-    }
     case 1:
-    {
-        Utils::clear();
-        cout << heading
-             << "\e[1;33mSigning up as a Doctor\n\n\e[0m";
-        string email, password;
-        cout << "Enter your email: ";
-        cin >> email;
-        cout << "Enter your password: ";
-        password = Utils::getPassword();
+        Auth::auth("doc", "signup", heading);
         break;
-    }
     case 2:
-    {
-        Utils::clear();
-        cout << heading
-             << "\e[1;33mLoging in as a Patient\n\n\e[0m";
-        string email, password;
-        cout << "Enter your email: ";
-        cin >> email;
-        cout << "Enter your password: ";
-        password = Utils::getPassword();
+        Auth::auth("pat", "login", heading);
         break;
-    }
     case 3:
-    {
-        Utils::clear();
-        cout << heading
-             << "\e[1;33mSigning up as a Patient\n\n\e[0m";
-        string email, password, name;
-        cout << "Enter your name: ";
-        cin >> name;
-        cout << "Enter your email: ";
-        cin >> email;
-        cout << "Enter your password: ";
-        password = Utils::getPassword();
+        Auth::auth("pat", "signup", heading);
         break;
-    }
     case 4:
         cout << "\nExiting...\n";
         return 0;
         break;
-
     default:
         break;
     }
 
     return 0;
 }
+
+// Menu::mini(bloodGrp, "Blood Group: ");
+// Patient patient("Taha", "taha@gmail.com", "0333-2946715", "letmein", 18, 'M', "B+", 185, 68, 1995514);
+// patient.displayProfile();
+// return 1;
