@@ -35,7 +35,7 @@ protected:
         newt = oldt;
         newt.c_lflag &= ~(ICANON | ECHO);
         tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-        char ch = std::cin.get();
+        char ch = cin.get();
         tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
         return ch;
 #endif
@@ -114,7 +114,7 @@ public:
 
     static void clearLine()
     {
-        cout << "\e[2K\e[G";
+        cout << "\e[2K\r";
     }
 
     static string getKeys()
@@ -150,7 +150,7 @@ public:
         if (ch == 127 || ch == '\b')
             return "BCK";
 
-        return std::string(1, ch);
+        return string(1, ch);
     }
 
     static string getPassword()
