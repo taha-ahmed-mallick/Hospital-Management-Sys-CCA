@@ -33,6 +33,7 @@ int main()
     int select = Menu::full(opt, flags, heading);
 
     vector<string> bloodGrp = {"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"};
+    vector<char> gender = {'M', 'F'};
 
     switch (select)
     {
