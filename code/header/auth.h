@@ -6,6 +6,7 @@
 email validation '@'
 password validation
 phone no. validation
+optional 👇
 age validation
 height validation
 */
@@ -34,6 +35,9 @@ public:
         float height, weight;
         int age, ID, itr = 0;
 
+        vector<string> grpNames = {"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"};
+        vector<char> genderClass = {'M', 'F'};
+
         if (action == "signup")
         {
             cout << "Name: ";
@@ -42,6 +46,7 @@ public:
             getline(cin, email);
             cout << "Phone Number \e[34m(03XXXXXXXXX)\e[0m: ";
             getline(cin, phone);
+
             do
             {
                 if (itr > 1)
@@ -60,6 +65,20 @@ public:
                 }
                 itr++;
             } while (password != passwordConfirm);
+
+            if (role == "doc")
+            {
+                cout << "Specialization: ";
+                getline(cin, specialization);
+            }
+            else
+            {
+                bloodGrp = Menu::mini(grpNames, "Blood Group: ");
+                gender = Menu::mini(genderClass, "Gender: ");
+                height = Menu::number(0, 300, "Height: ", "cm");
+                weight = Menu::number(0, 250, "Weight: ", "kgs");
+                age = Menu::number(0, 120, "Age: ", "yrs");
+            }
         }
         else
         {
