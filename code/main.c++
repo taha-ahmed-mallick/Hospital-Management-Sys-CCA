@@ -23,7 +23,7 @@ int main()
         }
     }
 
-    string heading = "\033[1;34m\t┌──────────────────────────┐\n\t│Hospital Management System│\n\t└──────────────────────────┘\033[0m\n\n\n";
+    string heading = "\e[1;34m\t┌──────────────────────────┐\n\t│Hospital Management System│\n\t└──────────────────────────┘\e[0m\n\n\n";
     vector<string> opt = {"Login as a Doctor",
                           "Signup as a Doc",
                           "Login as a Patient",
@@ -41,7 +41,7 @@ int main()
     {
         Utils::clear();
         cout << heading
-             << "\033[1;33mLoging in as a Doctor\n\n\033[0m";
+             << "\e[1;33mLoging in as a Doctor\n\n\e[0m";
         string email, password;
         cout << "Enter your email: ";
         cin >> email;
@@ -53,7 +53,7 @@ int main()
     {
         Utils::clear();
         cout << heading
-             << "\033[1;33mSigning up as a Doctor\n\n\033[0m";
+             << "\e[1;33mSigning up as a Doctor\n\n\e[0m";
         string email, password;
         cout << "Enter your email: ";
         cin >> email;
@@ -65,7 +65,7 @@ int main()
     {
         Utils::clear();
         cout << heading
-             << "\033[1;33mLoging in as a Patient\n\n\033[0m";
+             << "\e[1;33mLoging in as a Patient\n\n\e[0m";
         string email, password;
         cout << "Enter your email: ";
         cin >> email;
@@ -77,7 +77,7 @@ int main()
     {
         Utils::clear();
         cout << heading
-             << "\033[1;33mSigning up as a Patient\n\n\033[0m";
+             << "\e[1;33mSigning up as a Patient\n\n\e[0m";
         string email, password, name;
         cout << "Enter your name: ";
         cin >> name;

@@ -16,17 +16,17 @@ public:
             cout << "Use arrow keys to navigate:\n\n";
             for (int i = 0; i < size; i++)
             {
-                cout << "\033[1m";
+                cout << "\e[1m";
                 if (flags[i] == 1)
-                    cout << "\033[31m";
+                    cout << "\e[31m";
                 if (i == selected)
                 {
                     if (flags[i] == 0)
-                        cout << "\033[32m";
-                    cout << "\033[4m> ";
+                        cout << "\e[32m";
+                    cout << "\e[4m> ";
                 }
                 cout << opt[i] << endl;
-                cout << "\033[0m";
+                cout << "\e[0m";
             }
             cout << "\nPress ENTER to select.";
             string key = getKeys();
