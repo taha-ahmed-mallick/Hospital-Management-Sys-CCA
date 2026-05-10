@@ -63,8 +63,9 @@ private:
 
         return true;
     }
-    static bool isValidPassword(const string &password)
-    {
+
+public:
+    static bool isValidPassword(const string &password){
         if (password.length() < 8 || password.length() > 17)
             return false;
 
@@ -73,8 +74,6 @@ private:
 
         return true;
     }
-
-public:
     // role = doc | pat; action = login | signup
     static Person *auth(string role, string action, string banner)
     {

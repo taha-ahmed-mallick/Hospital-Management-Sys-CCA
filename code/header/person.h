@@ -6,8 +6,7 @@
 #include "./menu.h"
 using namespace std;
 
-class Person
-{
+class Person{
 protected:
     string name, email, phone, password;
     void setName(string val) { name = val; }
@@ -25,4 +24,9 @@ public:
     string getEmail() { return email; }
     string getPhone() { return phone; }
     string getPassword() { return password; }
+
+//     void updatePassword(string newPass)
+// {
+//     password = newPass;
+// }
 };

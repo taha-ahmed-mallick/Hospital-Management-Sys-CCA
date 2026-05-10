@@ -1,3 +1,5 @@
+#pragma once
+
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -5,7 +7,11 @@
 #include <cstdio>
 #include "./doctor.h"
 #include "./patient.h"
+
 using namespace std;
+
+// class Doctor;
+// class Patient;
 typedef struct
 {
     int docID, MR;
@@ -102,7 +108,7 @@ public:
         return patient;
     }
 
-    static Doctor *getDoc(string ID, string pass) {
+    static Doctor *getDoc(string ID, string pass){
         string line;
         ifstream doc("./records/doctors/DOC" + ID + ".txt");
         if (!doc)
@@ -124,4 +130,40 @@ public:
         Doctor *doctor = new Doctor(name, email, phone, password, specialization, qualification, docID);
         return doctor;
     }
+   static void updateDoctorPassword(int id, string newPassword)
+{
+    char buffer[32];
+    sprintf(buffer, "DOC%06d.txt", id);
+    string fileName(buffer);
+
+    ifstream in("./records/doctors/" + fileName);
+    if (!in)
+        return;
+
+    string line;
+    getline(in, line);
+    in.close();
+
+    vector<string> data;
+    stringstream ss(line);
+    string item;
+
+    while (getline(ss, item, '|'))
+        data.push_back(item);
+
+    // password is index 3 in your format:
+    data[3] = newPassword;
+
+    ofstream out("./records/doctors/" + fileName);
+
+    for (int i = 0; i < data.size(); i++)
+    {
+        out << data[i];
+        if (i != data.size() - 1)
+            out << "|";
+    }
+
+    out.close();
+}
+    
 };

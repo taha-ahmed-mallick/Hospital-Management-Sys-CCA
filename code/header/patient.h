@@ -2,8 +2,7 @@
 
 #include "./person.h"
 
-class Patient : public Person
-{
+class Patient : public Person{
 protected:
     char gender;
     string bloodGrp;
@@ -15,8 +14,9 @@ protected:
     void setWeight(float val) { weight = val; }
 
 public:
+    
     Patient(string name, string email, string phone, string password, int age, char gender, string bloodGrp, int height, float weight, int MR_num) : Person(name, email, phone, password), gender(gender), bloodGrp(bloodGrp), height(height), weight(weight), MR_num(MR_num), age(age) {}
-
+    
     void dashboard(string banner) override
     {
         vector<string> opt = {"Book Appointment",
@@ -40,7 +40,10 @@ public:
                 /* code */
                 break;
             case 2:
-                /* code */
+                Utils::clear();
+                displayProfile();
+                cout << "\nPress any key to return...";
+                Utils::getch();
                 break;
             case 3:
                 /* code */
@@ -59,7 +62,16 @@ public:
 
     void displayProfile() override
     {
+        cout << "\n--- Patient Profile ---\n";
+        cout << "Name: " << name << endl;
+        cout << "Email: " << email << endl;
+        cout << "Phone: " << phone << endl;
         cout << "Gender: " << gender << endl;
+        cout << "Blood Group: " << bloodGrp << endl;
+        cout << "Age: " << age << endl;
+        cout << "Height: " << height << " cm" << endl;
+        cout << "Weight: " << weight << " kg" << endl;
+        cout << "MR Number: " << MR_num << endl;
     }
 
     char getGender() { return gender; }

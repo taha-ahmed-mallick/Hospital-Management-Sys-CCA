@@ -12,7 +12,6 @@ protected:
 
 public:
     Doctor(string name, string email, string phone, string password, string specialization, string qualification, int ID) : Person(name, email, phone, password), specialization(specialization), qualification(qualification), ID(ID) {}
-
     void dashboard(string banner) override
     {
         vector<string> opt = {"Check Patient",
@@ -39,10 +38,12 @@ public:
                 /* code */
                 break;
             case 3:
-                /* code */
+                Utils::clear();
+                displayProfile();
+                cout << "\nPress any key to return...";
+                Utils::getch();
                 break;
             case 4:
-                /* code */
                 break;
             case 5:
                 return;
@@ -55,7 +56,13 @@ public:
 
     void displayProfile() override
     {
+        cout << "\n--- Doctor Profile ---\n";
+        cout << "Name: " << name << endl;
+        cout << "Email: " << email << endl;
+        cout << "Phone: " << phone << endl;
         cout << "Specialization: " << specialization << endl;
+        cout << "Qualification: " << qualification << endl;
+        cout << "Doctor ID: " << ID << endl;
     }
 
     string getSpec() { return specialization; }
