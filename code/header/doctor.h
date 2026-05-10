@@ -14,14 +14,42 @@ public:
     void dashboard(string banner) override
     {
         vector<string> opt = {"Check Patient",
-                              "Check Appointments",
+                              "View Schedule",
                               "Change Availibility",
                               "View Profile",
                               "Change Profile",
-                              "View Patient's Medical History"};
+                              "View Patient's Medical History",
+                              "Logout"};
         vector<int> flags(opt.size(), 0);
+        flags[opt.size() - 1] = 1;
         string heading = banner + "\e[1;32mWelcome Doc. " + name + "\e[0m\n\n";
-        Menu::full(opt, flags, heading);
+        while (true)
+        {
+            int select = Menu::full(opt, flags, heading);
+            switch (select)
+            {
+            case 0:
+                /* code */
+                break;
+            case 1:
+                /* code */
+                break;
+            case 2:
+                /* code */
+                break;
+            case 3:
+                /* code */
+                break;
+            case 4:
+                /* code */
+                break;
+            case 5:
+                return;
+                break;
+            default:
+                break;
+            }
+        }
     }
 
     void displayProfile() override

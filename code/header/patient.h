@@ -19,10 +19,38 @@ public:
                               "View Appointment",
                               "View Profile",
                               "Change Profile",
-                              "View Medical History"};
+                              "View Your Medical History",
+                              "Logout"};
         vector<int> flags(opt.size(), 0);
+        flags[opt.size() - 1] = 1;
         string heading = banner + "\e[1;32mWelcome " + name + "\e[0m\n\n";
-        Menu::full(opt, flags, heading);
+        while (true)
+        {
+            int select = Menu::full(opt, flags, heading);
+            switch (select)
+            {
+            case 0:
+                /* code */
+                break;
+            case 1:
+                /* code */
+                break;
+            case 2:
+                /* code */
+                break;
+            case 3:
+                /* code */
+                break;
+            case 4:
+                /* code */
+                break;
+            case 5:
+                return;
+                break;
+            default:
+                break;
+            }
+        }
     }
 
     void displayProfile() override
