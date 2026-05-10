@@ -1,9 +1,3 @@
-/*
-All file handling functionalities
-Providing classes with useable data in form of
-vector
-*/
-
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -70,9 +64,64 @@ public:
         char buffer[32];
         sprintf(buffer, "PAT%06d.txt", pat->getMR());
         string fileName(buffer);
-        ofstream docFile("./records/patients/" + fileName);
-        string data = pat->getName() + "|" + pat->getEmail() + "|" + pat->getPhone() + "|" + pat->getPassword() + "|" + to_string(pat->getAge()) + "|" + to_string(pat->getGender()) + "|" + pat->getBloodGrp() + "|" + to_string(pat->getHeight()) + "|" + to_string(pat->getWeight()) + "|" + to_string(pat->getMR());
-        docFile << data;
-        docFile.close();
+        ofstream patFile("./records/patients/" + fileName);
+        string data = pat->getName() + "|" + pat->getEmail() + "|" + pat->getPhone() + "|" + pat->getPassword() + "|" + to_string(pat->getAge()) + "|" + string(1, pat->getGender()) + "|" + pat->getBloodGrp() + "|" + to_string(pat->getHeight()) + "|" + to_string(pat->getWeight()) + "|" + to_string(pat->getMR());
+        patFile << data;
+        patFile.close();
+    }
+
+    static Patient *getPat(string MR, string pass)
+    {
+        string line;
+        ifstream pat("./records/patients/PAT" + MR + ".txt");
+        if (!pat)
+            throw string("\n\e[1;31mPatient with MR#" + MR + " doesn't exists\e[0m\n");
+        getline(pat, line);
+        stringstream ss(line);
+        string name, email, phone, password, bloodGrp, input;
+        int age, height, weight, ID;
+        char gender;
+        getline(ss, name, '|');
+        getline(ss, email, '|');
+        getline(ss, phone, '|');
+        getline(ss, password, '|');
+        if (pass != password)
+            throw string("\n\e[1;31mInvalid password!!\e[0m\n");
+        getline(ss, input, '|');
+        age = stoi(input);
+        getline(ss, input, '|');
+        gender = input[0];
+        getline(ss, bloodGrp, '|');
+        getline(ss, input, '|');
+        height = stoi(input);
+        getline(ss, input, '|');
+        weight = stoi(input);
+        getline(ss, input, '|');
+        ID = stoi(input);
+        Patient *patient = new Patient(name, email, phone, password, age, gender, bloodGrp, height, (float)weight, ID);
+        return patient;
+    }
+
+    static Doctor *getDoc(string ID, string pass) {
+        string line;
+        ifstream doc("./records/doctors/DOC" + ID + ".txt");
+        if (!doc)
+            throw string("\n\e[1;31mDoctor with ID: " + ID + " doesn't exists\e[0m\n");
+        getline(doc, line);
+        stringstream ss(line);
+        string name, email, phone, password, specialization, qualification, input;
+        int docID;
+        getline(ss, name, '|');
+        getline(ss, email, '|');
+        getline(ss, phone, '|');
+        getline(ss, password, '|');
+        if (pass != password)
+            throw string("\n\e[1;31mInvalid password!!\e[0m\n");
+        getline(ss, specialization, '|');
+        getline(ss, qualification, '|');
+        getline(ss, input, '|');
+        docID = stoi(input);
+        Doctor *doctor = new Doctor(name, email, phone, password, specialization, qualification, docID);
+        return doctor;
     }
 };
