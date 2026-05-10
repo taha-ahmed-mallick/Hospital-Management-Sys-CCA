@@ -35,7 +35,7 @@ int main()
 
     string heading = "\e[1;34m\t┌──────────────────────────┐\n\t│Hospital Management System│\n\t└──────────────────────────┘\e[0m\n\n\n";
     vector<string> opt = {"Login as a Doctor",
-                          "Signup as a Doc",
+                          "Signup as a Doctor",
                           "Login as a Patient",
                           "Signup as a Patient",
                           "EXIT"};
