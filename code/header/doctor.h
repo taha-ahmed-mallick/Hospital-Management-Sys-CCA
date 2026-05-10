@@ -20,7 +20,6 @@ public:
                               "Change Availibility",
                               "View Profile",
                               "Change Profile",
-                              "View Patient's Medical History",
                               "Logout"};
         vector<int> flags(opt.size(), 0);
         flags[opt.size() - 1] = 1;
