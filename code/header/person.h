@@ -10,6 +10,10 @@ class Person
 {
 protected:
     string name, email, phone, password;
+    void setName(string val) { name = val; }
+    void setEmail(string val) { email = val; }
+    void setPhone(string val) { phone = val; }
+    void setPassword(string val) { password = val; }
 
 public:
     Person(string name, string email, string phone, string password) : name(name), email(email), phone(phone), password(password) {}

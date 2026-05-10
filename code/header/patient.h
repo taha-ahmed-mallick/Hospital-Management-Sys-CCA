@@ -9,6 +9,10 @@ protected:
     string bloodGrp;
     int height, age, MR_num;
     float weight;
+    void setBloodGrp(string val) { bloodGrp = val; }
+    void setHeight(int val) { height = val; }
+    void setAge(int val) { age = val; }
+    void setWeight(float val) { weight = val; }
 
 public:
     Patient(string name, string email, string phone, string password, int age, char gender, string bloodGrp, int height, float weight, int MR_num) : Person(name, email, phone, password), gender(gender), bloodGrp(bloodGrp), height(height), weight(weight), MR_num(MR_num), age(age) {}

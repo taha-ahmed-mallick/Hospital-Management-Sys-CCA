@@ -7,6 +7,8 @@ class Doctor : public Person
 protected:
     string specialization, qualification;
     int ID;
+    void setSpec(string val) {specialization = val;}
+    void setQuali(string val) {qualification = val;}
 
 public:
     Doctor(string name, string email, string phone, string password, string specialization, string qualification, int ID) : Person(name, email, phone, password), specialization(specialization), qualification(qualification), ID(ID) {}
