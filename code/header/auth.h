@@ -6,70 +6,74 @@
 #include "./doctor.h"
 #include "./patient.h"
 #include "./files.h"
-/*
-password validation
-optional 👇
-age validation
-height validation
-*/
-static bool isValidName(const string &name){
-    if (name.empty()) 
-        return false;
 
-    for (char c : name)
-    {
-        if (!isalpha(c) && c != ' ')
-            return false;
-    }
-    return true;
-}
-static bool isValidPhone(const string &phone){
-    if (phone.length() != 11)
-        return false;
-
-    for (char c : phone)
-    {
-        if (!isdigit(c))
-            return false;
-    }
-
-    return true;
-}
-static bool isValidEmail(const string &email){
-    if (email.empty())
-        return false;
-
-    if (email.find('@') == string::npos) // @ character not found
-        return false;
-
-    if (email.find('.') == string::npos) // character not found Checks if email contains a dot:
-        return false;
-
-    if (email[0] == '@' || email[0] == '.')
-        return false;
-
-    if (email[email.length() - 1] == '@' || email[email.length() - 1] == '.')
-        return false;
-
-    for (char c : email)
-    {
-        if (c == ' ')
-            return false;
-    }
-
-    return true;
-}
-static bool isValidPassword(const string &password){
-    if (password.length() < 8 || password.length() > 17)
-        return false;
-
-    if (password[0] == '|')
-        return false;
-
-    return true;
-}
-class Auth : public FileManage
+class Auth : public FileManage, public Utils
 {
+private:
+    static bool isValidName(const string &name)
+    {
+        if (name.empty())
+            return false;
+
+        for (char c : name)
+        {
+            if (!isalpha(c) && c != ' ')
+                return false;
+        }
+        return true;
+    }
+    static bool isValidPhone(const string &phone)
+    {
+        if (phone.length() != 11)
+            return false;
+
+        for (char c : phone)
+        {
+            if (!isdigit(c))
+                return false;
+        }
+
+        if (phone[0] != '0' || phone[1] != '3')
+            return false;
+
+        return true;
+    }
+    static bool isValidEmail(const string &email)
+    {
+        if (email.empty())
+            return false;
+
+        if (email.find('@') == string::npos) // @ character not found
+            return false;
+
+        if (email.find('.') == string::npos) // character not found Checks if email contains a dot:
+            return false;
+
+        if (email[0] == '@' || email[0] == '.')
+            return false;
+
+        if (email[email.length() - 1] == '@' || email[email.length() - 1] == '.')
+            return false;
+
+        for (char c : email)
+        {
+            if (c == ' ')
+                return false;
+        }
+
+        return true;
+    }
+    static bool isValidPassword(const string &password)
+    {
+        if (password.length() < 8 || password.length() > 17)
+            return false;
+
+        if (password[0] == '|')
+            return false;
+
+        return true;
+    }
+
 public:
     // role = doc | pat; action = login | signup
     static Person *auth(string role, string action, string banner)
@@ -83,7 +87,7 @@ public:
         IDs both = getIDs();
 
     wrong_info:
-        Utils::clear();
+        clear();
         cout << banner << "\e[1;33m";
         if (action == "login")
             cout << "Logging in";
@@ -101,60 +105,69 @@ public:
 
         if (action == "signup")
         {
-            do{
+            do
+            {
                 cout << "Name: ";
                 getline(cin, name);
 
                 if (!isValidName(name))
                     cout << "\e[1;31mInvalid name! Only Alphabets allowed.\e[0m\n";
 
-            }while(!isValidName(name));
-            do{
+            } while (!isValidName(name));
+
+            do
+            {
                 cout << "Email: ";
                 getline(cin, email);
 
                 if (!isValidEmail(email))
                     cout << "\e[1;31mInvalid email format!\e[0m\n";
 
-            }while(!isValidEmail(email));
-            do{
+            } while (!isValidEmail(email));
+
+            do
+            {
                 cout << "Phone Number (03XXXXXXXXX): ";
                 getline(cin, phone);
 
-                 if (phone.length() != 11){
+                if (phone.length() != 11)
+                {
                     cout << "\e[1;31mPhone number must contain exactly 11 digits!\e[0m\n";
                 }
-                else if (!isValidPhone(phone)){
+                else if (!isValidPhone(phone))
+                {
                     cout << "\e[1;31mPhone number must contain digits only!\e[0m\n";
                 }
 
-            }while(!isValidPhone(phone));
-      while (true)
-{
-    cout << "Password: ";
-    password = Utils::getPassword();
+            } while (!isValidPhone(phone));
 
-    // STEP 1: validation
-    if (!isValidPassword(password))
-    {
-        cout << "\n\e[1;31mPassword must be 8-17 characters and cannot start with '|'\e[0m\n";
-        continue;
-    }
+            while (true)
+            {
+                cout << "Password: ";
+                password = getPassword();
 
-    cout << "\nConfirm Password: ";
-    passwordConfirm = Utils::getPassword();
+                // STEP 1: validation
+                if (!isValidPassword(password))
+                {
+                    cout << "\n\e[1;31mPassword must be 8-17 characters and cannot start with '|'\e[0m\n";
+                    continue;
+                }
 
-    // STEP 2: match check
-    if (password != passwordConfirm)
-    {
-        cout << "\n\e[1;31mPasswords do not match! Try again.\e[0m\n";
-        continue;
-    }
+                cout << "\nConfirm Password: ";
+                passwordConfirm = getPassword();
 
-    // success
-    cout << "\n\e[1;32mPassword set successfully!\e[0m\n";
-    break;
-}
+                // STEP 2: match check
+                if (password != passwordConfirm)
+                {
+                    cout << "\n\e[1;31mPasswords do not match! Try again.\e[0m\n";
+                    continue;
+                }
+
+                // success
+                cout << "\n\e[1;32mPassword set successfully!\e[0m\n";
+                break;
+            }
+
             if (role == "doc")
             {
                 cout << "Specialization: ";
@@ -200,8 +213,22 @@ public:
             getline(cin, input);
             ID = stoi(input);
             cout << "Enter Password: ";
-            password = Utils::getPassword();
-            cout << password << endl;
+            password = getPassword();
+            try
+            {
+                if (role == "doc")
+                    person = getDoc(input, password);
+                else
+                    person = getPat(input, password);
+                return person;
+            }
+            catch (string e)
+            {
+                cout << e;
+                cout << "\e[1;34mPress any key to go back to main menu...\e[0m";
+                getch();
+                throw string("");
+            }
         }
     }
 };
