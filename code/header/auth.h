@@ -7,14 +7,67 @@
 #include "./patient.h"
 #include "./files.h"
 /*
-email validation '@'
 password validation
-phone no. validation
 optional 👇
 age validation
 height validation
 */
+static bool isValidName(const string &name){
+    if (name.empty()) 
+        return false;
 
+    for (char c : name)
+    {
+        if (!isalpha(c) && c != ' ')
+            return false;
+    }
+    return true;
+}
+static bool isValidPhone(const string &phone){
+    if (phone.length() != 11)
+        return false;
+
+    for (char c : phone)
+    {
+        if (!isdigit(c))
+            return false;
+    }
+
+    return true;
+}
+static bool isValidEmail(const string &email){
+    if (email.empty())
+        return false;
+
+    if (email.find('@') == string::npos) // @ character not found
+        return false;
+
+    if (email.find('.') == string::npos) // character not found Checks if email contains a dot:
+        return false;
+
+    if (email[0] == '@' || email[0] == '.')
+        return false;
+
+    if (email[email.length() - 1] == '@' || email[email.length() - 1] == '.')
+        return false;
+
+    for (char c : email)
+    {
+        if (c == ' ')
+            return false;
+    }
+
+    return true;
+}
+static bool isValidPassword(const string &password){
+    if (password.length() < 8 || password.length() > 17)
+        return false;
+
+    if (password[0] == '|')
+        return false;
+
+    return true;
+}
 class Auth : public FileManage
 {
 public:
@@ -48,32 +101,60 @@ public:
 
         if (action == "signup")
         {
-            cout << "Name: ";
-            getline(cin, name);
-            cout << "Email: ";
-            getline(cin, email);
-            cout << "Phone Number \e[34m(03XXXXXXXXX)\e[0m: ";
-            getline(cin, phone);
+            do{
+                cout << "Name: ";
+                getline(cin, name);
 
-            do
-            {
-                if (itr > 1)
-                    cout << "\e[A";
-                if (itr)
-                    cout << "\r\e[A\e[J\e[1;31mPasswords don't match!!!\e[0m\n";
-                cout << "Password: ";
-                password = Utils::getPassword();
-                cout << "\nConfirm Password: ";
-                passwordConfirm = Utils::getPassword();
-                if (password == passwordConfirm)
-                {
-                    if (itr)
-                        cout << "\e[A";
-                    cout << "\r\e[A\e[J\e[1;32mPasswords matched.\e[0m\n";
+                if (!isValidName(name))
+                    cout << "\e[1;31mInvalid name! Only Alphabets allowed.\e[0m\n";
+
+            }while(!isValidName(name));
+            do{
+                cout << "Email: ";
+                getline(cin, email);
+
+                if (!isValidEmail(email))
+                    cout << "\e[1;31mInvalid email format!\e[0m\n";
+
+            }while(!isValidEmail(email));
+            do{
+                cout << "Phone Number (03XXXXXXXXX): ";
+                getline(cin, phone);
+
+                 if (phone.length() != 11){
+                    cout << "\e[1;31mPhone number must contain exactly 11 digits!\e[0m\n";
                 }
-                itr++;
-            } while (password != passwordConfirm);
+                else if (!isValidPhone(phone)){
+                    cout << "\e[1;31mPhone number must contain digits only!\e[0m\n";
+                }
 
+            }while(!isValidPhone(phone));
+      while (true)
+{
+    cout << "Password: ";
+    password = Utils::getPassword();
+
+    // STEP 1: validation
+    if (!isValidPassword(password))
+    {
+        cout << "\n\e[1;31mPassword must be 8-17 characters and cannot start with '|'\e[0m\n";
+        continue;
+    }
+
+    cout << "\nConfirm Password: ";
+    passwordConfirm = Utils::getPassword();
+
+    // STEP 2: match check
+    if (password != passwordConfirm)
+    {
+        cout << "\n\e[1;31mPasswords do not match! Try again.\e[0m\n";
+        continue;
+    }
+
+    // success
+    cout << "\n\e[1;32mPassword set successfully!\e[0m\n";
+    break;
+}
             if (role == "doc")
             {
                 cout << "Specialization: ";
