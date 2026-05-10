@@ -2,6 +2,10 @@
 
 #include "./utils.h"
 #include "./menu.h"
+#include "./person.h"
+#include "./doctor.h"
+#include "./patient.h"
+#include "./files.h"
 /*
 email validation '@'
 password validation
@@ -11,12 +15,21 @@ age validation
 height validation
 */
 
-class Auth
+class Auth : public FileManage
 {
 public:
     // role = doc | pat; action = login | signup
-    static void auth(string role, string action, string banner)
+    static Person *auth(string role, string action, string banner)
     {
+        string name, email, phone, password, passwordConfirm, specialization, qualification, bloodGrp, input, dataContents;
+        char gender, ans;
+        float height, weight;
+        int age, ID, itr = 0;
+        Person *person = nullptr;
+
+        IDs both = getIDs();
+
+    wrong_info:
         Utils::clear();
         cout << banner << "\e[1;33m";
         if (action == "login")
@@ -29,11 +42,6 @@ public:
         else
             cout << "Patient!";
         cout << "\n\n\e[0m";
-
-        string name, email, phone, password, passwordConfirm, specialization, bloodGrp, input;
-        char gender;
-        float height, weight;
-        int age, ID, itr = 0;
 
         vector<string> grpNames = {"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"};
         vector<char> genderClass = {'M', 'F'};
@@ -70,15 +78,37 @@ public:
             {
                 cout << "Specialization: ";
                 getline(cin, specialization);
+                cout << "Qualification: ";
+                getline(cin, qualification);
             }
             else
             {
                 bloodGrp = Menu::mini(grpNames, "Blood Group: ");
                 gender = Menu::mini(genderClass, "Gender: ");
-                height = Menu::number(0, 300, "Height: ", "cm");
-                weight = Menu::number(0, 250, "Weight: ", "kgs");
+                height = Menu::number(1, 300, "Height: ", "cm");
+                weight = Menu::number(1, 250, "Weight: ", "kgs");
                 age = Menu::number(0, 120, "Age: ", "yrs");
             }
+
+            vector<char> confirm = {'Y', 'n'};
+            ans = Menu::mini(confirm, "Is the above info correct [Y/n]: ");
+            if (ans == 'n')
+                goto wrong_info;
+
+            if (role == "doc")
+            {
+                ID = ++both.docID;
+                person = new Doctor(name, email, phone, password, specialization, qualification, ID);
+                createDoc((Doctor *)person);
+            }
+            else
+            {
+                ID = ++both.MR;
+                person = new Patient(name, email, phone, password, age, gender, bloodGrp, height, weight, ID);
+                createPat((Patient *)person);
+            }
+            updateIDs(both);
+            return person;
         }
         else
         {

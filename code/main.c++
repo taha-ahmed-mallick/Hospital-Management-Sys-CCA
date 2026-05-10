@@ -26,6 +26,13 @@ int main()
         }
     }
 
+    ifstream data("./records/data.txt");
+    if (!data){
+        ofstream data("./records/data.txt");
+        data << "0|0";
+        data.close();
+    }
+
     string heading = "\e[1;34m\t┌──────────────────────────┐\n\t│Hospital Management System│\n\t└──────────────────────────┘\e[0m\n\n\n";
     vector<string> opt = {"Login as a Doctor",
                           "Signup as a Doc",
@@ -43,25 +50,25 @@ int main()
     case 0:
     {
         Doctor *doc = (Doctor*)Auth::auth("doc", "login", heading);
-        doc->dashboard();
+        doc->dashboard(heading);
         break;
     }
     case 1:
     {
         Doctor *doc = (Doctor*)Auth::auth("doc", "signup", heading);
-        doc->dashboard();
+        doc->dashboard(heading);
         break;
     }
     case 2:
     {
         Patient *pat = (Patient*)Auth::auth("pat", "login", heading);
-        pat->dashboard();
+        pat->dashboard(heading);
         break;
     }
     case 3:
     {
         Patient *pat = (Patient*)Auth::auth("pat", "signup", heading);
-        pat->dashboard();
+        pat->dashboard(heading);
         break;
     }
     case 4:
