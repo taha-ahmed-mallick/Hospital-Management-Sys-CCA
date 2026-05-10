@@ -41,17 +41,29 @@ int main()
     switch (select)
     {
     case 0:
-        Auth::auth("doc", "login", heading);
+    {
+        Doctor *doc = (Doctor*)Auth::auth("doc", "login", heading);
+        doc->dashboard();
         break;
+    }
     case 1:
-        Auth::auth("doc", "signup", heading);
+    {
+        Doctor *doc = (Doctor*)Auth::auth("doc", "signup", heading);
+        doc->dashboard();
         break;
+    }
     case 2:
-        Auth::auth("pat", "login", heading);
+    {
+        Patient *pat = (Patient*)Auth::auth("pat", "login", heading);
+        pat->dashboard();
         break;
+    }
     case 3:
-        Auth::auth("pat", "signup", heading);
+    {
+        Patient *pat = (Patient*)Auth::auth("pat", "signup", heading);
+        pat->dashboard();
         break;
+    }
     case 4:
         cout << "\nExiting...\n";
         return 0;
@@ -62,8 +74,3 @@ int main()
 
     return 0;
 }
-
-// Menu::mini(bloodGrp, "Blood Group: ");
-// Patient patient("Taha", "taha@gmail.com", "0333-2946715", "letmein", 18, 'M', "B+", 185, 68, 1995514);
-// patient.displayProfile();
-// return 1;
