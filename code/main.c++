@@ -27,7 +27,8 @@ int main()
     }
 
     ifstream data("./records/data.txt");
-    if (!data){
+    if (!data)
+    {
         ofstream data("./records/data.txt");
         data << "0|0";
         data.close();
@@ -40,43 +41,57 @@ int main()
                           "Signup as a Patient",
                           "EXIT"};
     vector<int> flags = {0, 0, 0, 0, 1};
-    int select = Menu::full(opt, flags, heading);
 
     vector<string> bloodGrp = {"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"};
     vector<char> gender = {'M', 'F'};
-
-    switch (select)
+    while (true)
     {
-    case 0:
-    {
-        Doctor *doc = (Doctor*)Auth::auth("doc", "login", heading);
-        doc->dashboard(heading);
-        break;
-    }
-    case 1:
-    {
-        Doctor *doc = (Doctor*)Auth::auth("doc", "signup", heading);
-        doc->dashboard(heading);
-        break;
-    }
-    case 2:
-    {
-        Patient *pat = (Patient*)Auth::auth("pat", "login", heading);
-        pat->dashboard(heading);
-        break;
-    }
-    case 3:
-    {
-        Patient *pat = (Patient*)Auth::auth("pat", "signup", heading);
-        pat->dashboard(heading);
-        break;
-    }
-    case 4:
-        cout << "\nExiting...\n";
-        return 0;
-        break;
-    default:
-        break;
+        int select = Menu::full(opt, flags, heading);
+        switch (select)
+        {
+        case 0:
+        {
+            try
+            {
+                Doctor *doc = (Doctor *)Auth::auth("doc", "login", heading);
+                doc->dashboard(heading);
+            }
+            catch (string err)
+            {
+            }
+            break;
+        }
+        case 1:
+        {
+            Doctor *doc = (Doctor *)Auth::auth("doc", "signup", heading);
+            doc->dashboard(heading);
+            break;
+        }
+        case 2:
+        {
+            try
+            {
+                Patient *pat = (Patient *)Auth::auth("pat", "login", heading);
+                pat->dashboard(heading);
+            }
+            catch (string err)
+            {
+            }
+            break;
+        }
+        case 3:
+        {
+            Patient *pat = (Patient *)Auth::auth("pat", "signup", heading);
+            pat->dashboard(heading);
+            break;
+        }
+        case 4:
+            cout << "\nExiting...\n";
+            return 0;
+            break;
+        default:
+            break;
+        }
     }
 
     return 0;
