@@ -57,7 +57,7 @@ public:
     static void createDoc(Doctor *doc)
     {
         char buffer[32];
-        sprintf(buffer, "DOC%09d.txt", doc->getID());
+        sprintf(buffer, "DOC%06d.txt", doc->getID());
         string fileName(buffer);
         ofstream docFile("./records/doctors/" + fileName);
         string data = doc->getName() + "|" + doc->getEmail() + "|" + doc->getPhone() + "|" + doc->getPassword() + "|" + doc->getSpec() + "|" + doc->getQuali() + "|" + to_string(doc->getID());
@@ -68,7 +68,7 @@ public:
     static void createPat(Patient *pat)
     {
         char buffer[32];
-        sprintf(buffer, "PAT%09d.txt", pat->getMR());
+        sprintf(buffer, "PAT%06d.txt", pat->getMR());
         string fileName(buffer);
         ofstream docFile("./records/patients/" + fileName);
         string data = pat->getName() + "|" + pat->getEmail() + "|" + pat->getPhone() + "|" + pat->getPassword() + "|" + to_string(pat->getAge()) + "|" + to_string(pat->getGender()) + "|" + pat->getBloodGrp() + "|" + to_string(pat->getHeight()) + "|" + to_string(pat->getWeight()) + "|" + to_string(pat->getMR());
