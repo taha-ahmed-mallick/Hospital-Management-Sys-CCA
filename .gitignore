@@ -4,3 +4,4 @@
 *.exe
 /code/records/doctors/*.txt
 /code/records/patients/*.txt
+/code/records/*.txt
