@@ -22,9 +22,28 @@
 
 using namespace std;
 
+/* a header file for utility functions and classes
+ * common for both windows and linux, like getch(), clear screen, create directory, etc.*/
+
 class Utils
 {
 protected:
+    static char getch()
+    {
+#ifdef _WIN32
+        return _getch();
+#else
+        termios oldt, newt;
+        tcgetattr(STDIN_FILENO, &oldt);
+        newt = oldt;
+        newt.c_lflag &= ~(ICANON | ECHO);
+        tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+        char ch = cin.get();
+        tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+        return ch;
+#endif
+    }
+
     static void setEcho(bool enable)
     {
 #ifdef _WIN32
@@ -49,21 +68,6 @@ protected:
     }
 
 public:
-    static char getch()
-    {
-#ifdef _WIN32
-        return _getch();
-#else
-        termios oldt, newt;
-        tcgetattr(STDIN_FILENO, &oldt);
-        newt = oldt;
-        newt.c_lflag &= ~(ICANON | ECHO);
-        tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-        char ch = cin.get();
-        tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-        return ch;
-#endif
-    }
     static int createDir(const string &path)
     {
 #ifdef _WIN32
