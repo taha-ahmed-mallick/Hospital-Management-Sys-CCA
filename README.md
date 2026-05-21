@@ -1,7 +1,5 @@
 # CCA Project
 
-<!-- ## 💻 Group Name: QuantumCoders -->
-
 ## 💡 Project Idea: Hospital Management System
 
 ## 👥 Group Members
