@@ -2,7 +2,6 @@
 
 #include "./utils.h"
 #include "./menu.h"
-#include "./person.h"
 #include "./doctor.h"
 #include "./patient.h"
 #include "./files.h"
@@ -10,6 +9,7 @@
 class Auth : public FileManage, public Utils
 {
 private:
+    // Validations
     static bool isValidName(const string &name)
     {
         if (name.empty())
@@ -28,10 +28,8 @@ private:
             return false;
 
         for (char c : phone)
-        {
             if (!isdigit(c))
                 return false;
-        }
 
         if (phone[0] != '0' || phone[1] != '3')
             return false;
@@ -63,9 +61,8 @@ private:
 
         return true;
     }
-
-public:
-    static bool isValidPassword(const string &password){
+    static bool isValidPassword(const string &password)
+    {
         if (password.length() < 8 || password.length() > 17)
             return false;
 
@@ -74,13 +71,15 @@ public:
 
         return true;
     }
-    // role = doc | pat; action = login | signup
+
+public:
+    // role = "doc" | "pat"; action = "login" | "signup"
     static Person *auth(string role, string action, string banner)
     {
+        // to save input fields
         string name, email, phone, password, passwordConfirm, specialization, qualification, bloodGrp, input, dataContents;
         char gender, ans;
-        float height, weight;
-        int age, ID, itr = 0;
+        int age, ID, height, weight, itr = 0;
         Person *person = nullptr;
 
         IDs both = getIDs();
@@ -135,7 +134,7 @@ public:
                 }
                 else if (!isValidPhone(phone))
                 {
-                    cout << "\e[1;31mPhone number must contain digits only!\e[0m\n";
+                    cout << "\e[1;31mInvalid phone number!\e[0m\n";
                 }
 
             } while (!isValidPhone(phone));
@@ -180,7 +179,7 @@ public:
                 gender = Menu::mini(genderClass, "Gender: ");
                 height = Menu::number(1, 300, "Height: ", "cm");
                 weight = Menu::number(1, 250, "Weight: ", "kgs");
-                age = Menu::number(0, 120, "Age: ", "yrs");
+                age = Menu::number(1, 120, "Age: ", "yrs");
             }
 
             vector<char> confirm = {'Y', 'n'};
@@ -192,14 +191,23 @@ public:
             {
                 ID = ++both.docID;
                 person = new Doctor(name, email, phone, password, specialization, qualification, ID);
-                createDoc((Doctor *)person);
+                DocStruct docData = {ID, name, email, phone, password, specialization, qualification};
+                createDoc(docData);
+                cout << "\n\e[1;32mDoctor account created successfully! Your ID: ";
             }
             else
             {
                 ID = ++both.MR;
                 person = new Patient(name, email, phone, password, age, gender, bloodGrp, height, weight, ID);
-                createPat((Patient *)person);
+                PatStruct patData = {ID, name, email, phone, password, bloodGrp, gender, age, height, weight};
+                createPat(patData);
+                cout << "\n\e[1;32mPatient account created successfully! Your MR#: ";
             }
+            char buffer[32];
+            sprintf(buffer, "%06d", ID);
+            cout << "\e[1;33m" << buffer << "\e[0m. Please remember it for login.\e[0m\n"
+                 << "\e[1;34mPress Enter to go to dashboard...\e[0m";
+            cin.get();
             updateIDs(both);
             return person;
         }
@@ -216,9 +224,15 @@ public:
             try
             {
                 if (role == "doc")
-                    person = getDoc(input, password);
+                {
+                    DocStruct doctor = getDoc(input, password);
+                    person = new Doctor(doctor.name, doctor.email, doctor.phone, doctor.password, doctor.specialization, doctor.qualification, doctor.ID);
+                }
                 else
-                    person = getPat(input, password);
+                {
+                    PatStruct patient = getPat(input, password);
+                    person = new Patient(patient.name, patient.email, patient.phone, patient.password, patient.age, patient.gender, patient.bloodGrp, patient.height, patient.weight, patient.MR);
+                }
                 return person;
             }
             catch (string e)

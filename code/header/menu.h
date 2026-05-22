@@ -5,6 +5,7 @@
 class Menu : protected Utils
 {
 public:
+    //              takes options              flags for color        any text to show before options
     static int full(const vector<string> &opt, const vector<int> &flags, string before = "")
     {
         int selected = 0, size = opt.size();
@@ -43,6 +44,7 @@ public:
         } while (true);
     }
 
+    // used generic template here because the options can be of any type (string, int, char etc.)
     template <typename T>
     static T mini(const vector<T> &opt, string text = "", string after = "")
     {
@@ -61,7 +63,7 @@ public:
             else if (key == "ENT")
             {
                 clearLine();
-                cout << text << opt[selected] << endl;
+                cout << text << opt[selected]<< after << endl;
                 return opt[selected];
             }
             if (selected < 0)
@@ -71,7 +73,9 @@ public:
         } while (true);
     }
 
-    static int number(int start, int end, string text = "", string after = "") {
+    // simplified version of full menu for just number options
+    static int number(int start, int end, string text = "", string after = "")
+    {
         vector<int> vec;
         for (int i = start; i <= end; i++)
             vec.push_back(i);
